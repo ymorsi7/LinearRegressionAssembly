@@ -254,7 +254,7 @@ We were able to successfully normalize the data but ended up getting a high loss
 
 ## Afterword (Feb 2023)
 
-At the time of this project, I was frustrated with assembly and absoluted loathed learning about it. However, after completing this project I found myself able to appreciate assembly, and LEGv8 in particular. It opened my eyes to a very fundamental part of ECE, and paved the path for my future.
+At the time of this project, I was frustrated with assembly and absoluted loathed learning about it. However, after completing this it, I found myself able to appreciate assembly, and LEGv8 in particular. It opened my eyes to a very fundamental part of ECE, and paved the path for my future.
 
 
 
