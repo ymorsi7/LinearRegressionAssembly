@@ -3,6 +3,11 @@ Linear regression model created with assembly LEGv8 architecture (June 2021)
 
 ### Pranav Maddireddy, Yusuf Morsi; June 3rd 2021
 
+## Foreword (Feb 2023)
+
+My friend, Pranav, and I submitted this project as freshmen electrical engineering students at UC San Diego in June 2021. The assignment's goal was to write a program   that implements linear regression on a 2D   list of points using stochastic gradient   descent (SGD) to learn a line that   passes   through as many points as
+possible.
+
 ## Loss Function
 
 In the loss function, we explore a method of finding the accuracy of our estimation (relative to the given data); we must find the distance between every data point and the line that we created. After taking the distance between the dataset values and the estimated points, we square the differences ((yi-yi)^2), then sum them all up for the entire dataset, before multiplying that sum with (1/n) to normalize the number to find the loss. 
