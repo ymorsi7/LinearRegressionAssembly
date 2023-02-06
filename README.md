@@ -145,6 +145,107 @@ past:
 
 Using the Desmos online calculator, we visualize our model. After inputting our data and equation, we can see how our line fits into our data! The attached graph (Figure 1) depicts our estimation line going through our data.
 
+Loss Number: ~0.45 
+![Figure 1](images/1.png)
+
+## Early Stop of Training Using Absolute Values
+
+Here, we implemented an if-statement that detects whether our loss gets lower than a threshold that matches our dataset (this statement is placed before the epoch iterations). If the loss is lower than the threshold, the program breaks. We were able to implement this with two lines of code.
+
+```assembly
+FCMPS S14, S7
+B.GT end
+```
+
+## Early Stop of Training Using Difference in Losses
+
+Similar to the previous section, this function calculates the difference between the current loss and the last iteration's loss, to see if it is less than the given epsilon value. If it is, the training function is halted.
+
+```assembly
+SUBIS XZR, X5, #0
+	B.EQ  past
+	LDURS S9 [SP, #0] 
+	FSUBS S9, S7, S9
+	FCMPS S9, S4
+	B.LT end
+
+past:  
+	STURS S7  [SP, #0] // store last loss value 
+	ADDI  X5, X5, #1   // add to counter
+	SUBS  XZR, X2, X5 	// checker
+	B.GT   loop1
+
+```
+
+## Normalization of Dataset
+
+After running the linear regression algorithm on “RawSOCRdata.txt” and we realize that the results look strange and are not matched with our line (the slope was off); we believe that this went wrong because we didn’t normalize the points prior to running the algorithm, so our graph below shows what it looks like when we have a normalized estimation without a normalized dataset. This equation ensures that our data is consistent and in the same format, and is essential for us to be able to accurately analyze and interpret data.
+
+![Figure 2](images/2.png)
+
+Here, we use data standardization by taking our data point, subtracting the average, and dividing that difference by the standard deviation (σ). Doing this to normalize the data solved the issue that is depicted in the above image (Figure 2). The following is the graph after we fixed the data (Figure 3):
+
+![Figure 3](images/3.png)
+
+The following (Figure 4) is a graph with both datasets (normalized in green and unnormalized in blue): 
+
+![Figure 4](images/4.png)
+
+```assembly
+M: NAN (7FC00000)
+C: NAN (7FC00000)
+Loss: NAN (7FC00000)
+Normal: 
+
+	LDURS S6, [X15, #0] // loads dataset [j][0]
+	LDURS S8, [X15, #4] // loads dataset[j][1]
+	
+	FSUBS S6, S6, S10 
+	FDIVS S6, S6, S12
+	FSUBS S8, S8, S11
+	FDIVS S8, S8, S13
+	STURS S6, [X15, #0]
+	STURS S8, [X15, #4] 	
+	ADDI  X15, X15, #8   // sets up X15 for the next iteration. 
+	ADDI  X16, X16, #1
+	SUBS  XZR, X0, X16  // checker 
+	B.GT   Normal
+	Br LR
+
+```
+
+### Normalization Conversions:
+
+```text
+(-1.2879898548126220703125 , -1.2641551494598388671875) , (1.94417703151702880859375 , 0.540391564369), 
+( 0.75041735172271728515625, 1.810484409332275390625), (0.08596451580524444580078125, 0.98960769176483154296875 ), 
+( -0.15616671741008758544921875, 1.14012658596038818359375) , (0.3562479317188262939453125,  -0.4724581539630889892578125), (0.97565639019012451171875, 0.924337565898895263671875), 
+( 1.093905925750732421875, 0.53808796405792236328125 ),
+ ( -0.09422586858272552490234375, -1.31176412105560302734375 ), 
+( -0.724894344806671142578125, -0.674414098262786865234375 ), (-0.888192594051361083984375, -0.15378344058990478515625), 
+( -0.251891911029815673828125, -1.175847530364990234375), (0.1310131847858428955078125, -0.29507529735565185546875 ),
+ ( -0.53343963623046875, -0.536961376667022705078125 ), (0.119748868048191070556640625, -1.02610874176025390625),
+ ( 1.70204579830169677734375, 0.809921205043792724609375 ), (-0.90508472919464111328125, 0.00363464490510523319244384765625 ), (0.328095734119415283203125, 1.03798520565032958984375 ), (1.7808830738067626953125, 0.648663461208343505859375 ), (-0.527811825275421142578125, -0.4156343042850494384765625),
+ ( -0.133642375469207763671875, 0.908211290836334228515625), (0.457605302333831787109375, 1.0817544460296630859375), (-2.5831091403961181640625, -2.4229037761688232421875 ),
+ ( 0.19858188927173614501953125, 0.00363464490510523319244384765625 ),
+ ( -0.24626405537128448486328125, 0.951981723308563232421875), (-0.4827631413936614990234375, 0.02052836306393146514892578125), (1.5612719058990478515625, 0.995750963687896728515625), 
+(-0.32509708404541015625, 0.1610527336597442626953125), (-0.865668237209320068359375, -1.621992588043212890625), 
+( -1.479440212249755859375, -1.1950447559356689453125)
+
+```
+
+![Figure 5](images/5.png)
+
+```text
+Normalized Results: 
+m: 0.55444824695587158203125
+c:-0.374769508838653564453125
+Loss: 48.793376922607421875
+```
+
+## Conclusion
+
+We were able to successfully normalize the data but ended up getting a high loss value. When we attempted to fix the issue we had problems with running Legiss (kept stalling out). This could be due to an infinite loop somewhere but the only thing we added was the normalization part and I couldn’t find anything through debugging. 
 
 
 
