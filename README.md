@@ -1,7 +1,7 @@
 # LinearRegressionAssembly
 Linear regression model created with assembly LEGv8 architecture (June 2021)
 
-### Pranav Maddireddy, Yusuf Morsi
+### Pranav Maddireddy, Yusuf Morsi; June 3rd 2021
 
 ## Loss Function
 
