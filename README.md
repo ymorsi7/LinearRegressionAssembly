@@ -252,7 +252,9 @@ Loss: 48.793376922607421875
 We were able to successfully normalize the data but ended up getting a high loss value. When we attempted to fix the issue we had problems with running Legiss (kept stalling out). This could be due to an infinite loop somewhere but the only thing we added was the normalization part and I couldn’t find anything through debugging. 
 
 
+## Afterword (Feb 2023)
 
+At the time of this project, I was frustrated with assembly and absoluted loathed learning about it. However, after completing this project I found myself able to appreciate assembly, and LEGv8 in particular. It opened my eyes to a very fundamental part of ECE, and paved the path for my future.
 
 
 
